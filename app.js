@@ -1,5 +1,5 @@
 function initialize() {
-    let status = "* Offline *";
+    var status = "* Offline *";
     if (navigator.onLine) {
         status = "* Online *";
         retrieveContacts();
@@ -31,25 +31,22 @@ function initialize() {
             );
 }
 
-function retrieveContacts() {
+function retrieveContacts(){
     const xhr = new XMLHttpRequest();
     const url = "contacts.json";
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            var contacts = JSON.parse(xhr.response).contacts;
+            var conacts = JSON.parse(xhr.response).contacts;
             displayContacts(contacts);
-
-            // Store contact data to localstorage
+            
+            //Store contact data to localStorage
             const localStorage = window.localStorage;
-            if (localStorage) {
+            if(localStorage) {
                 localStorage.setItem("contacts", JSON.stringify(contacts));
             }
         }
-    };
-
-    xhr.open("get", url);
-    xhr.send();
+    }
 }
 
 function displayContacts(contacts) {
@@ -59,12 +56,15 @@ function displayContacts(contacts) {
 function addRow(contact) {
     var tcontent = document.getElementById("tcontent");
     var row = tcontent.insertRow();
+
     var nameCell = row.insertCell();
     nameCell.setAttribute('data-label', "Name");
     nameCell.innerHTML = contact.name;
+
     var addressCell = row.insertCell();
     addressCell.setAttribute('data-label', "Address");
     addressCell.innerHTML = contact.address;
+
     var mobileCell = row.insertCell();
     mobileCell.setAttribute('data-label', "Mobile");
     mobileCell.innerHTML = contact.phone.mobile;
